@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+    <div id="elzero">
+
+        <div class="container">
+
+            <input v-model="text" id="text" placeholder="score" type="text" />
+            <input v-model="tex" placeholder="name" id="tt" type="text" />
+            <input type="button" id="click" v-bind:disabled="!text" value="click" @click="firstfun(text,tex)" />
+            <input type="button" v-if="darray.length>1" id="del" value="delete all" @click="deleteall()" />
+            <div>
+                <span v-for="(ss, index) in darray">
+                    <h1>
+                        <span @click="ss.b=!ss.b" style="{'text-decoration':ss.b?'line-through':''}">{{ss.x}}</span><span>  | </span><span>{{ss.g}}</span>
+                        <input type="button" @click="deletethis(index)" id="dell" value="delete" />
+                    </h1>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../Scripts/vue.js"></script>
+    <script>
+        vm = new Vue({
+            el:'#elzero',
+            data: {
+                text:"" ,
+                tex:"",
+                darray:[]
+
+
+            },
+            methods: {
+                firstfun: function (r, v) {
+                    if (!isNaN(r)) {
+                        this.darray.push({ x: r, b: false, g: v });
+                        this.text = "";
+                        this.tex = "";
+
+                        this.darray.sort(function (a, b) { return b.x - a.x });
+                    }
+                    else
+                    {
+                        this.text = "error: inter score";
+                        this.tex = "error";
+                        this.darray = [];
+                    }
+                },
+                deleteall: function () {
+                    this.darray = [];
+                },
+                deletethis: function(i) {
+                    this.darray.splice(i,1);
+                }
+
+            }
+
+        })
+
+    </script>
+</body>
+</html>
